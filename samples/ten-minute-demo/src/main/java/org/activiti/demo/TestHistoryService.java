@@ -10,6 +10,7 @@ import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricActivityInstanceQuery;
 import org.activiti.engine.history.HistoricDetail;
 import org.activiti.engine.history.HistoricDetailQuery;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricProcessInstanceQuery;
 import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.history.HistoricVariableInstanceQuery;
@@ -25,7 +26,7 @@ public class TestHistoryService {
 		checkHistoricActivityInstanceQuery(historyService.createHistoricActivityInstanceQuery());
 		checkHistoricDetailQuery(historyService.createHistoricDetailQuery());
 
-//		checkHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery());
+		checkHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery());
 
 //		checkHistoricTaskInstanceQuery(historyService.createHistoricTaskInstanceQuery());
 //		checkHistoricVariableInstanceQuery(historyService.createHistoricVariableInstanceQuery());
@@ -81,7 +82,17 @@ public class TestHistoryService {
 	}
 
 	private static void checkHistoricProcessInstanceQuery(HistoricProcessInstanceQuery historicProcessInstanceQuery) {
+		long finishedProcesses = historicProcessInstanceQuery.finished().list().size();
+		long unfinishedProcesses = historicProcessInstanceQuery.unfinished().list().size();
+		HistoricProcessInstance historicProcessInstanceByKermit = historicProcessInstanceQuery.startedBy("kermit").singleResult();
+		HistoricProcessInstance historicProcessInstance = historicProcessInstanceQuery
+				.variableValueEquals("numberOfDays", "42").singleResult();
 
+		//very buggy
+		log("historicProcessInstanceQuery", "finishedProcesses: " + finishedProcesses);
+		log("historicProcessInstanceQuery", "unfinishedProcesses: " + unfinishedProcesses);
+		log("historicProcessInstanceQuery", "historicProcessInstance.startedBy(): " + historicProcessInstanceByKermit.getId());
+		log("historicProcessInstanceQuery", "historicProcessInstance.getId(): " + historicProcessInstance.getId());
 	}
 
 	private static void checkHistoricTaskInstanceQuery(HistoricTaskInstanceQuery historicTaskInstanceQuery) {
