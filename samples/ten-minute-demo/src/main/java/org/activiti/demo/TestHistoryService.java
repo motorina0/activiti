@@ -35,7 +35,7 @@ public class TestHistoryService {
 		checkHistoricTaskInstanceQuery(historyService.createHistoricTaskInstanceQuery());
 		checkHistoricVariableInstanceQuery(historyService.createHistoricVariableInstanceQuery());
 
-//		checkNativeHistoricActivityInstanceQuery(historyService.createNativeHistoricActivityInstanceQuery());
+		checkNativeHistoricActivityInstanceQuery(historyService.createNativeHistoricActivityInstanceQuery());
 
 	}
 
@@ -128,8 +128,10 @@ public class TestHistoryService {
 	private static void checkNativeHistoricActivityInstanceQuery(
 			NativeHistoricActivityInstanceQuery nativeHistoricActivityInstanceQuery) {
 
-		nativeHistoricActivityInstanceQuery.sql("select RES.* from `activiti`.`ACT_HI_ACTINST` RES"
-				+ " WHERE RES.PROC_INST_ID_ = \"30\"  order by RES.ID_ asc LIMIT 2147483647 OFFSET 0").list();
+		//List<HistoricActivityInstance> processSteps = nativeHistoricActivityInstanceQuery.sql("SELECT  `ID_` ,  `PROC_INST_ID_`,   `PROC_DEF_ID_`,  `START_TIME_`,  `END_TIME_`,  `DURATION_`,  `START_USER_ID_`,  `START_ACT_ID_` as `ACT_ID_` ,  `END_ACT_ID_`,  `NAME_` as `ACT_NAME_` FROM `activiti`.`ACT_HI_PROCINST` LIMIT 1000;").list();
+		List<HistoricActivityInstance> processSteps = nativeHistoricActivityInstanceQuery
+				.sql("select RES.* from `activiti`.`ACT_HI_ACTINST` RES" + " WHERE RES.PROC_INST_ID_ = \"30\"").list();
+		log("nativeHistoricActivityInstanceQuery", "Process Steps: "+processSteps);
 	}
 
 	private static void log(String queryName, String message) {
