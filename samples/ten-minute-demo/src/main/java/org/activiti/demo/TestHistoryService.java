@@ -1,5 +1,7 @@
 package org.activiti.demo;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.activiti.engine.HistoryService;
@@ -12,6 +14,7 @@ import org.activiti.engine.history.HistoricDetail;
 import org.activiti.engine.history.HistoricDetailQuery;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricProcessInstanceQuery;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.history.HistoricVariableInstanceQuery;
 import org.activiti.engine.history.NativeHistoricActivityInstanceQuery;
@@ -28,7 +31,7 @@ public class TestHistoryService {
 
 		checkHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery());
 
-//		checkHistoricTaskInstanceQuery(historyService.createHistoricTaskInstanceQuery());
+		checkHistoricTaskInstanceQuery(historyService.createHistoricTaskInstanceQuery());
 //		checkHistoricVariableInstanceQuery(historyService.createHistoricVariableInstanceQuery());
 
 //		checkNativeHistoricActivityInstanceQuery(historyService.createNativeHistoricActivityInstanceQuery());
@@ -96,8 +99,13 @@ public class TestHistoryService {
 	}
 
 	private static void checkHistoricTaskInstanceQuery(HistoricTaskInstanceQuery historicTaskInstanceQuery) {
-		// TODO Auto-generated method stub
+		Calendar caledar = Calendar.getInstance();
+		caledar.set(2016, 10, 1);
+		Date firstOfNovember = caledar.getTime();
+		HistoricTaskInstance hti = historicTaskInstanceQuery.taskAssignee("gonzo").taskCreatedAfter(firstOfNovember)
+				.singleResult();
 
+		log("historicTaskInstanceQuery", "task name: " + hti.getName());
 	}
 
 	private static void checkHistoricVariableInstanceQuery(
