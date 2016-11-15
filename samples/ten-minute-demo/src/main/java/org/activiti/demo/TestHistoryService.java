@@ -5,13 +5,16 @@ import java.util.List;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricActivityInstanceQuery;
+import org.activiti.engine.history.HistoricDetail;
 import org.activiti.engine.history.HistoricDetailQuery;
 import org.activiti.engine.history.HistoricProcessInstanceQuery;
 import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.history.HistoricVariableInstanceQuery;
 import org.activiti.engine.history.NativeHistoricActivityInstanceQuery;
+import org.activiti.engine.task.Task;
 
 public class TestHistoryService {
 	public static void main(String[] args) {
@@ -20,18 +23,15 @@ public class TestHistoryService {
 		HistoryService historyService = engine.getHistoryService();
 
 		checkHistoricActivityInstanceQuery(historyService.createHistoricActivityInstanceQuery());
-		/*
-		 * checkHistoricDetailQuery(historyService.createHistoricDetailQuery());
-		 * checkHistoricProcessInstanceQuery(historyService.
-		 * createHistoricProcessInstanceQuery());
-		 * checkHistoricTaskInstanceQuery(historyService.
-		 * createHistoricTaskInstanceQuery());
-		 * checkHistoricVariableInstanceQuery(historyService.
-		 * createHistoricVariableInstanceQuery());
-		 * 
-		 * checkNativeHistoricActivityInstanceQuery(historyService.
-		 * createNativeHistoricActivityInstanceQuery());
-		 */
+		checkHistoricDetailQuery(historyService.createHistoricDetailQuery());
+
+//		checkHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery());
+
+//		checkHistoricTaskInstanceQuery(historyService.createHistoricTaskInstanceQuery());
+//		checkHistoricVariableInstanceQuery(historyService.createHistoricVariableInstanceQuery());
+
+//		checkNativeHistoricActivityInstanceQuery(historyService.createNativeHistoricActivityInstanceQuery());
+
 	}
 
 	private static void checkHistoricActivityInstanceQuery(
@@ -67,8 +67,17 @@ public class TestHistoryService {
 	}
 
 	private static void checkHistoricDetailQuery(HistoricDetailQuery historicDetailQuery) {
-		// from the UI perspective
+		ProcessEngine engine = ProcessEngines.getDefaultProcessEngine();
+		TaskService taskService = engine.getTaskService();
+		Task firstTask = taskService.newTask("123");
+		taskService.saveTask(firstTask);
 
+		taskService.setVariable(firstTask.getId(), "variable1", "value1");
+		taskService.setVariable(firstTask.getId(), "variable1", "value2");
+		taskService.setVariable(firstTask.getId(), "variable1", "value3");
+
+		List<HistoricDetail> resultSet = historicDetailQuery.variableUpdates().orderByTime().asc().list();
+		log("historicDetailQuery", "result count: " + resultSet.size());
 	}
 
 	private static void checkHistoricProcessInstanceQuery(HistoricProcessInstanceQuery historicProcessInstanceQuery) {

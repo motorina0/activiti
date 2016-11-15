@@ -7,10 +7,12 @@
   <bean id="processEngineConfiguration"
     class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
 
-    <property name="jdbcUrl" value="jdbc:mysql://33.33.33.1:3306/activiti?autoReconnect=true" />
+    <property name="jdbcUrl" value="jdbc:mysql://33.33.33.1:3306/activiti-test?autoReconnect=true" />
     <property name="jdbcDriver" value="com.mysql.jdbc.Driver" />
     <property name="jdbcUsername" value="root" />
     <property name="jdbcPassword" value="root" />
+    
+    <property name="history" value="full" />
 
     <!-- Database configurations -->
     <property name="databaseSchemaUpdate" value="true" />
