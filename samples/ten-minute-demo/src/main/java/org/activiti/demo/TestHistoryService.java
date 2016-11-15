@@ -16,6 +16,7 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricProcessInstanceQuery;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricTaskInstanceQuery;
+import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.history.HistoricVariableInstanceQuery;
 import org.activiti.engine.history.NativeHistoricActivityInstanceQuery;
 import org.activiti.engine.task.Task;
@@ -32,7 +33,7 @@ public class TestHistoryService {
 		checkHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery());
 
 		checkHistoricTaskInstanceQuery(historyService.createHistoricTaskInstanceQuery());
-//		checkHistoricVariableInstanceQuery(historyService.createHistoricVariableInstanceQuery());
+		checkHistoricVariableInstanceQuery(historyService.createHistoricVariableInstanceQuery());
 
 //		checkNativeHistoricActivityInstanceQuery(historyService.createNativeHistoricActivityInstanceQuery());
 
@@ -110,8 +111,18 @@ public class TestHistoryService {
 
 	private static void checkHistoricVariableInstanceQuery(
 			HistoricVariableInstanceQuery historicVariableInstanceQuery) {
-		// TODO Auto-generated method stub
+		ProcessEngine engine = ProcessEngines.getDefaultProcessEngine();
+		TaskService taskService = engine.getTaskService();
+		Task firstTask = taskService.newTask("123");
+		taskService.saveTask(firstTask);
 
+		taskService.setVariable(firstTask.getId(), "variable1", "value1");
+		taskService.setVariable(firstTask.getId(), "variable1", "value2");
+		taskService.setVariable(firstTask.getId(), "variable1", "value3");
+
+		List<HistoricVariableInstance> variables = historicVariableInstanceQuery.variableName("variable1").list();
+		
+		log("historicVariableInstanceQuery", "variables: " + variables);
 	}
 
 	private static void checkNativeHistoricActivityInstanceQuery(
