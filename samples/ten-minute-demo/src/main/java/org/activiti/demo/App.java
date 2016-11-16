@@ -19,6 +19,6 @@ public class App {
 		RepositoryService repositoryService = engine.getRepositoryService();
 
 		Deployment deployment = repositoryService.createDeployment()
-				.addClasspathResource("org/activiti/demo/FinancialReportProcess.bpmn20.xml").deploy();
+				.addClasspathResource("org/activiti/demo/process/FinancialReportProcess.bpmn20.xml").deploy();
 	}
 }

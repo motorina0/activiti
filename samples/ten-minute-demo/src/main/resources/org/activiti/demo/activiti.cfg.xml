@@ -10,8 +10,14 @@
     <property name="jdbcUrl" value="jdbc:mysql://33.33.33.1:3306/activiti-test?autoReconnect=true" />
     <property name="jdbcDriver" value="com.mysql.jdbc.Driver" />
     <property name="jdbcUsername" value="root" />
-    <property name="jdbcPassword" value="root" />
+    <property name="jdbcPassword" value="root" /> 
     
+<!--     
+    <property name="jdbcUrl" value="jdbc:h2:mem:activiti;DB_CLOSE_DELAY=1000" />
+    <property name="jdbcDriver" value="org.h2.Driver" />
+    <property name="jdbcUsername" value="sa" />
+    <property name="jdbcPassword" value="" />
+     -->
     <property name="history" value="full" />
 
     <!-- Database configurations -->
