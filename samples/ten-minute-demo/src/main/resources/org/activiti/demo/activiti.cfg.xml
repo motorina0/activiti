@@ -26,8 +26,10 @@
     <!-- job executor configurations -->
     <property name="jobExecutorActivate" value="false" />
 
-    <property name="createDiagramOnDeploy" value="false" />
+    <property name="createDiagramOnDeploy" value="false" />        
 
   </bean>
 
+	<bean id="activityListener" class="org.activiti.demo.delegate.ListenToActivity"/>
+	<bean id="userTaskListener" class="org.activiti.demo.delegate.ListenToTask"/>
 </beans>
