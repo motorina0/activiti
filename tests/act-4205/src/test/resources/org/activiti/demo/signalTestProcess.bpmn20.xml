@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:yaoqiang="http://bpmn.sourceforge.net" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test" exporter="" exporterVersion="" id="m1452892595912" name="" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd">
+  <signal id="cancelSignal" name="Cancel Signal" activiti:scope="global"></signal>
+  <process id="signalTestProcess" isExecutable="true" isClosed="false" processType="None">
+    <userTask id="userTask" name="User Task" completionQuantity="1" implementation="##unspecified" isForCompensation="false" startQuantity="1"></userTask>
+    <boundaryEvent id="cancelTask" name="Cancel Task" attachedToRef="userTask" cancelActivity="true">
+      <signalEventDefinition signalRef="cancelSignal"></signalEventDefinition>
+    </boundaryEvent>
+    <startEvent id="startEvent" name="Start Event"></startEvent>
+    <sequenceFlow id="startFlow" sourceRef="startEvent" targetRef="userTask"></sequenceFlow>
+    <endEvent id="normalEndEvent" name="End Event"></endEvent>
+    <sequenceFlow id="cancelFlow" sourceRef="cancelTask" targetRef="cancelEndEvent"></sequenceFlow>
+    <endEvent id="cancelEndEvent" name="End Event"></endEvent>
+    <sequenceFlow id="normalEndFlow" sourceRef="userTask" targetRef="normalEndEvent"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_signalTestProcess">
+    <bpmndi:BPMNPlane bpmnElement="signalTestProcess" id="BPMNPlane_signalTestProcess">
+      <bpmndi:BPMNShape bpmnElement="userTask" id="BPMNShape_userTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="240.0" y="120.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="cancelTask" id="BPMNShape_cancelTask">
+        <omgdc:Bounds height="30.0" width="30.0" x="305.0" y="165.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
+        <omgdc:Bounds height="35.0" width="35.0" x="60.0" y="132.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="normalEndEvent" id="BPMNShape_normalEndEvent">
+        <omgdc:Bounds height="35.0" width="35.0" x="500.0" y="132.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="cancelEndEvent" id="BPMNShape_cancelEndEvent">
+        <omgdc:Bounds height="35.0" width="35.0" x="380.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="startFlow" id="BPMNEdge_startFlow">
+        <omgdi:waypoint x="95.0" y="149.0"></omgdi:waypoint>
+        <omgdi:waypoint x="240.0" y="150.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="cancelFlow" id="BPMNEdge_cancelFlow">
+        <omgdi:waypoint x="320.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="319.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="277.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="normalEndFlow" id="BPMNEdge_normalEndFlow">
+        <omgdi:waypoint x="340.0" y="150.0"></omgdi:waypoint>
+        <omgdi:waypoint x="500.0" y="149.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
