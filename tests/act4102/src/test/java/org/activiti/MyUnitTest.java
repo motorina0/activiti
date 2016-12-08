@@ -39,8 +39,10 @@ public class MyUnitTest {
 
     activitiRule.getFormService().submitTaskFormData(task.getId(), new HashMap<String, String>());
 
-    // get task from main process
+    // get first task from main process
     task = activitiRule.getTaskService().createTaskQuery().singleResult();
+    
+    activitiRule.getFormService().submitTaskFormData(task.getId(), new HashMap<String, String>());
 
     Object testVariable2 = activitiRule.getRuntimeService().getVariable(processInstance.getId(), "test2");
     assertNotNull(testVariable2);
