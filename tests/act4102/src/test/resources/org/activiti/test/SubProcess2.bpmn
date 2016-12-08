@@ -3,17 +3,17 @@
   <process id="subProcess2" name="My process" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
     <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="usertaskSP2" name="User Task">
+    <userTask id="usertaskSP2" name="User Task SP2">
       <extensionElements>
         <activiti:formProperty id="test" type="string"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertaskSP2"></sequenceFlow>
-    <scriptTask id="scripttask1" name="Script Task" scriptFormat="groovy" activiti:autoStoreVariables="false">
+    <scriptTask id="scripttaskSP2" name="Script Task SP2" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>execution.setVariable("test" , "sp2");</script>
     </scriptTask>
-    <sequenceFlow id="flow2" sourceRef="usertaskSP2" targetRef="scripttask1"></sequenceFlow>
-    <sequenceFlow id="flow3" sourceRef="scripttask1" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="usertaskSP2" targetRef="scripttaskSP2"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="scripttaskSP2" targetRef="endevent1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_subProcess2">
     <bpmndi:BPMNPlane bpmnElement="subProcess2" id="BPMNPlane_subProcess2">
@@ -26,7 +26,7 @@
       <bpmndi:BPMNShape bpmnElement="usertaskSP2" id="BPMNShape_usertaskSP2">
         <omgdc:Bounds height="55.0" width="105.0" x="230.0" y="180.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="scripttask1" id="BPMNShape_scripttask1">
+      <bpmndi:BPMNShape bpmnElement="scripttaskSP2" id="BPMNShape_scripttaskSP2">
         <omgdc:Bounds height="55.0" width="105.0" x="410.0" y="180.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
