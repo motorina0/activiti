@@ -8,11 +8,11 @@
     </startEvent>
     <callActivity id="sp" name="Sub process 1" calledElement="subProcess1"></callActivity>
     <sequenceFlow id="flow1" sourceRef="start" targetRef="sp"></sequenceFlow>
-    <callActivity id="sp2" name="Sub Process" calledElement="subProcess2"></callActivity>
+    <callActivity id="sp2" name="Sub Process 2" calledElement="subProcess2"></callActivity>
     <boundaryEvent id="boundarycompensation2" name="Compensate" attachedToRef="sp2" cancelActivity="true">
       <compensateEventDefinition></compensateEventDefinition>
     </boundaryEvent>
-    <scriptTask id="scripttask2" name="Script Task" isForCompensation="true" scriptFormat="groovy" activiti:autoStoreVariables="false">
+    <scriptTask id="scripttaskCom02" name="Script Task Comp 02" isForCompensation="true" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>
       		out:println "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!2";      
       		execution.setVariable("test2" , "compensated2");
@@ -21,25 +21,25 @@
     <intermediateThrowEvent id="compensationintermediatethrowevent3" name="CompensationThrowingEvent">
       <compensateEventDefinition></compensateEventDefinition>
     </intermediateThrowEvent>
-    <sequenceFlow id="flow15" sourceRef="sp2" targetRef="usertask01"></sequenceFlow>
+    <sequenceFlow id="flow15" sourceRef="sp2" targetRef="compensationintermediatethrowevent3"></sequenceFlow>
     <sequenceFlow id="flow16" sourceRef="sp" targetRef="sp2"></sequenceFlow>
     <boundaryEvent id="boundarycompensation3" name="Compensate" attachedToRef="sp" cancelActivity="true">
       <compensateEventDefinition></compensateEventDefinition>
     </boundaryEvent>
-    <scriptTask id="scripttask3" name="Script Task" isForCompensation="true" scriptFormat="groovy" activiti:autoStoreVariables="false">
+    <scriptTask id="scripttaskCom01" name="Script Task Com 01" isForCompensation="true" scriptFormat="groovy" activiti:autoStoreVariables="false">
       <script>
       		out:println "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1";
       		execution.setVariable("test1" , "compensated1");
       </script>
     </scriptTask>
-    <userTask id="usertask01" name="User Task 01"></userTask>
     <endEvent id="endevent2" name="End"></endEvent>
-    <sequenceFlow id="flow19" sourceRef="usertask01" targetRef="compensationintermediatethrowevent3"></sequenceFlow>
     <userTask id="usertask2" name="User Task 02"></userTask>
     <sequenceFlow id="flow20" sourceRef="compensationintermediatethrowevent3" targetRef="usertask2"></sequenceFlow>
     <sequenceFlow id="flow21" sourceRef="usertask2" targetRef="endevent2"></sequenceFlow>
     <association id="association2" sourceRef="boundarycompensation2" targetRef="scripttask2"></association>
     <association id="association3" sourceRef="boundarycompensation3" targetRef="scripttask3"></association>
+    <association id="association4" sourceRef="boundarycompensation3" targetRef="scripttaskCom01"></association>
+    <association id="association5" sourceRef="boundarycompensation2" targetRef="scripttaskCom02"></association>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_my-process">
     <bpmndi:BPMNPlane bpmnElement="my-process" id="BPMNPlane_my-process">
@@ -58,17 +58,14 @@
       <bpmndi:BPMNShape bpmnElement="boundarycompensation2" id="BPMNShape_boundarycompensation2">
         <omgdc:Bounds height="30.0" width="30.0" x="419.0" y="130.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="scripttask2" id="BPMNShape_scripttask2">
-        <omgdc:Bounds height="55.0" width="105.0" x="381.0" y="70.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="scripttaskCom02" id="BPMNShape_scripttaskCom02">
+        <omgdc:Bounds height="55.0" width="105.0" x="381.0" y="50.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="compensationintermediatethrowevent3" id="BPMNShape_compensationintermediatethrowevent3">
-        <omgdc:Bounds height="35.0" width="35.0" x="794.0" y="179.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="680.0" y="178.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="scripttask3" id="BPMNShape_scripttask3">
-        <omgdc:Bounds height="55.0" width="105.0" x="150.0" y="70.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="usertask01" id="BPMNShape_usertask01">
-        <omgdc:Bounds height="55.0" width="105.0" x="620.0" y="169.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="scripttaskCom01" id="BPMNShape_scripttaskCom01">
+        <omgdc:Bounds height="55.0" width="105.0" x="152.0" y="50.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
         <omgdc:Bounds height="35.0" width="35.0" x="1084.0" y="179.0"></omgdc:Bounds>
@@ -83,31 +80,27 @@
       <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
         <omgdi:waypoint x="500.0" y="195.0"></omgdi:waypoint>
         <omgdi:waypoint x="582.0" y="195.0"></omgdi:waypoint>
-        <omgdi:waypoint x="620.0" y="196.0"></omgdi:waypoint>
+        <omgdi:waypoint x="680.0" y="195.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
         <omgdi:waypoint x="270.0" y="195.0"></omgdi:waypoint>
         <omgdi:waypoint x="349.0" y="195.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
-        <omgdi:waypoint x="725.0" y="196.0"></omgdi:waypoint>
-        <omgdi:waypoint x="794.0" y="196.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
-        <omgdi:waypoint x="829.0" y="196.0"></omgdi:waypoint>
+        <omgdi:waypoint x="715.0" y="195.0"></omgdi:waypoint>
         <omgdi:waypoint x="900.0" y="196.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
         <omgdi:waypoint x="1005.0" y="196.0"></omgdi:waypoint>
         <omgdi:waypoint x="1084.0" y="196.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="association2" id="BPMNEdge_association2">
-        <omgdi:waypoint x="419.0" y="145.0"></omgdi:waypoint>
-        <omgdi:waypoint x="433.0" y="125.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="association3" id="BPMNEdge_association3">
+      <bpmndi:BPMNEdge bpmnElement="association4" id="BPMNEdge_association4">
         <omgdi:waypoint x="205.0" y="140.0"></omgdi:waypoint>
-        <omgdi:waypoint x="202.0" y="125.0"></omgdi:waypoint>
+        <omgdi:waypoint x="204.0" y="105.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="association5" id="BPMNEdge_association5">
+        <omgdi:waypoint x="434.0" y="130.0"></omgdi:waypoint>
+        <omgdi:waypoint x="433.0" y="105.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -20,7 +20,7 @@ public class MyUnitTest {
 
   @Test
   @Deployment(resources = { "org/activiti/test/my-process.bpmn", "org/activiti/test/SubProcess1.bpmn", "org/activiti/test/SubProcess2.bpmn" })
-  public void test() {
+  public void testCompensationEvent() {
     Map<String, Object> initialVariables = new HashMap<String, Object>();
     initialVariables.put("test", "begin");
     ProcessInstance processInstance = activitiRule.getRuntimeService().startProcessInstanceByKey("my-process", initialVariables);
@@ -42,7 +42,6 @@ public class MyUnitTest {
     // get first task from main process
     task = activitiRule.getTaskService().createTaskQuery().singleResult();
     
-    activitiRule.getFormService().submitTaskFormData(task.getId(), new HashMap<String, String>());
 
     Object testVariable2 = activitiRule.getRuntimeService().getVariable(processInstance.getId(), "test2");
     assertNotNull(testVariable2);
